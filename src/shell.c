@@ -431,9 +431,11 @@ void shellScan(Shell *shell, char *fmt, ...)
                 shell->write(&buffer[index], 1);
                 index++;
             }
-        } while (buffer[index -1] != '\r' && buffer[index -1] != '\n' && index < SHELL_SCAN_BUFFER);
+        } while (buffer[index -1] != '\r' && buffer[index -1] != '\n' && index < SHELL_SCAN_BUFFER - 1);
         shellWriteString(shell, "\r\n");
         buffer[index] = '\0';
+    } else {
+        buffer[0] = '\0';  /* 确保 buffer 已初始化 */
     }
 
     va_start(vargs, fmt);
